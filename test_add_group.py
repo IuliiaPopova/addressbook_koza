@@ -2,13 +2,14 @@
 import unittest
 
 from selenium import webdriver
+
 from group import Group
 
 
 class test_add_group(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
-        self.driver.set_window_position(0, -1000)
+        #self.driver.set_window_position(0, -1000)
         self.driver.maximize_window()
         self.driver.implicitly_wait(3)
 
@@ -16,7 +17,7 @@ class test_add_group(unittest.TestCase):
         self.open_home_page()
         self.login(username="admin", password="secret")
         self.open_group_page()
-        group  = Group(name="dfgdfg", header="dfgdfg", footer="dfgfghgfhg")
+        group = Group(name="dfgdfg", header="dfgdfg", footer="dfgfghgfhg")
         self.create_group(group)
         self.return_to_group_page()
         self.logout()
@@ -48,13 +49,13 @@ class test_add_group(unittest.TestCase):
         self.driver.find_element_by_name("new").click()
         self.driver.find_element_by_name("group_name").click()
         self.driver.find_element_by_name("group_name").clear()
-        self.driver.find_element_by_name("group_name").send_keys(name)
+        self.driver.find_element_by_name("group_name").send_keys(group.name)
         self.driver.find_element_by_name("group_header").click()
         self.driver.find_element_by_name("group_header").clear()
-        self.driver.find_element_by_name("group_header").send_keys(header)
+        self.driver.find_element_by_name("group_header").send_keys(group.header)
         self.driver.find_element_by_name("group_footer").click()
         self.driver.find_element_by_name("group_footer").clear()
-        self.driver.find_element_by_name("group_footer").send_keys(footer)
+        self.driver.find_element_by_name("group_footer").send_keys(group.footer)
         self.driver.find_element_by_name("submit").click()
 
     def return_to_group_page(self):
