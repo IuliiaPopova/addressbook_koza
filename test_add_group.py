@@ -14,26 +14,21 @@ class test_add_group(unittest.TestCase):
         self.driver.implicitly_wait(3)
 
     def test_add_group(self):
-        self.open_home_page()
         self.login(username="admin", password="secret")
-        self.open_group_page()
         group = Group(name="dfgdfg", header="dfgdfg", footer="dfgfghgfhg")
         self.create_group(group)
-        self.return_to_group_page()
         self.logout()
 
     def test_add_empty_group(self):
-        self.open_home_page()
         self.login(username="admin", password="secret")
-        self.open_group_page()
         self.create_group(Group(name="", header="", footer=""))
-        self.return_to_group_page()
         self.logout()
 
     def open_home_page(self):
         self.driver.get("http://localhost/addressbook/")
 
     def login(self, username, password):
+        self.open_home_page()
         self.driver.find_element_by_name("user").click()
         self.driver.find_element_by_name("user").clear()
         self.driver.find_element_by_name("user").send_keys(username)
@@ -46,6 +41,7 @@ class test_add_group(unittest.TestCase):
         self.driver.find_element_by_link_text("groups").click()
 
     def create_group(self, group):
+        self.open_group_page()
         self.driver.find_element_by_name("new").click()
         self.driver.find_element_by_name("group_name").click()
         self.driver.find_element_by_name("group_name").clear()
@@ -57,6 +53,7 @@ class test_add_group(unittest.TestCase):
         self.driver.find_element_by_name("group_footer").clear()
         self.driver.find_element_by_name("group_footer").send_keys(group.footer)
         self.driver.find_element_by_name("submit").click()
+        self.return_to_group_page()
 
     def return_to_group_page(self):
         # return to group page

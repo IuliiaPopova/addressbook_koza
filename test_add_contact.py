@@ -13,10 +13,7 @@ class test_add_contact(unittest.TestCase):
         self.driver.implicitly_wait(3)
 
     def test_add_contact(self):
-        self.open_home_page()
         self.login(username="admin", password="secret")
-        self.add_new_cont()
-        self.add_address()
         self.create_new_cont(Contact(first_name="Olga", last_name="Kozlova"))
         self.logout()
 
@@ -24,6 +21,7 @@ class test_add_contact(unittest.TestCase):
         self.driver.get("http://localhost/addressbook/")
 
     def login(self, username, password):
+        self.open_home_page()
         self.driver.find_element_by_name("user").send_keys(username)
         self.driver.find_element_by_name("pass").send_keys(password)
         self.driver.find_element_by_xpath('//input[@type = "submit"]').click()
@@ -34,12 +32,13 @@ class test_add_contact(unittest.TestCase):
     def add_address(self):
         self.driver.find_element_by_xpath('//input[@name = "quickadd"][1]').click()
 
-
-
     def create_new_cont(self, contact):
+        self.add_new_cont()
+        self.add_address()
         self.driver.find_element_by_name("firstname").send_keys(contact.first_name)
         self.driver.find_element_by_name("lastname").send_keys(contact.last_name)
         self.driver.find_element_by_name("submit").click()
+
     #
     def logout(self):
         self.driver.find_element_by_link_text("Logout").click()
