@@ -20,5 +20,11 @@ class GroupHelper:
         self.app.driver.find_element_by_name("submit").click()
         self.return_to_group_page()
 
+    def delete(self):
+        self.open_group_page()
+        self.app.driver.find_element_by_xpath('//input[@name = "selected[]"][1]').click()
+        self.app.driver.find_element_by_name("delete").click()
+        self.return_to_group_page()
+
     def return_to_group_page(self):
         self.app.driver.find_element_by_link_text("group page").click()

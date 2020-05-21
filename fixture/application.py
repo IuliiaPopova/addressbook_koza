@@ -18,9 +18,5 @@ class Application(object):
     def open_home_page(self):
         self.driver.get("http://localhost/addressbook/")
 
-
-
     def tear_down(self):
         self.driver.quit()
-
-
