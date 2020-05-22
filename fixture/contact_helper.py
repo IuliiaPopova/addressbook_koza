@@ -20,4 +20,5 @@ class ContactHelper:
         self.app.driver.find_element_by_xpath('//input[@name="selected[]"]').click()
         self.app.driver.find_element_by_xpath('//input[@value="Delete"]').click()
         self.app.driver.switch_to_alert().accept()
+        self.app.driver.find_element_by_xpath('//a[@href="./"]').click()
 
