@@ -25,6 +25,7 @@ class GroupHelper:
         self.fill(group)
         self.app.driver.find_element_by_name("submit").click()
         self.open_group_page()
+        self.group_cache = None
 
     def modify(self, group):
         """
@@ -37,6 +38,7 @@ class GroupHelper:
         self.fill(group)
         self.app.driver.find_element_by_name("update").click()
         self.open_group_page()
+        self.group_cache = None
 
     def delete(self):
         """
@@ -46,6 +48,7 @@ class GroupHelper:
         self.select_first_group()
         self.app.driver.find_element_by_name("delete").click()
         self.open_group_page()
+        self.group_cache = None
 
     def select_first_group(self):
         """
@@ -84,16 +87,21 @@ class GroupHelper:
         self.open_group_page()
         return len(self.app.driver.find_elements_by_xpath('//input[@name = "selected[]"]'))
 
+    group_cache = None
+
     def get_groups_list(self):
         """
         Get groups
         :return:
         """
-        self.open_group_page()
-        group_list = []
-        groups = self.app.driver.find_elements_by_xpath('//input[@name="selected[]"]')
-        for element in groups:
-            name = element.get_attribute("title")
-            id = element.get_attribute("value")
-            group_list.append(Group(name=name[8:-1], id=id))
-        return group_list
+        if self.group_cache is None:
+
+            self.open_group_page()
+            self.group_cache = []
+            groups = self.app.driver.find_elements_by_xpath('//input[@name="selected[]"]')
+            for element in groups:
+                name = element.get_attribute("title")
+                id = element.get_attribute("value")
+                self.group_cache.append(Group(name=name[8:-1], id=id))
+        return list(self.group_cache)# return copy of cache using list
+
