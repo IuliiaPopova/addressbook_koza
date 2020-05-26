@@ -7,7 +7,7 @@ Class Application:
 
 from selenium import webdriver
 
-from fixture.contact import Contact
+from fixture.contacthelper import ContactHelper
 from fixture.group import GroupHelper
 from fixture.session import Session
 
@@ -20,7 +20,7 @@ class Application(object):
         self.driver.implicitly_wait(1)#the driver should wait when searching for an element
         self.session = Session(self)#create instance of the class Session
         self.group = GroupHelper(self)#create instance of the class Group
-        self.contact = Contact(self)#create instance of the class Contact
+        self.contact = ContactHelper(self)#create instance of the class Contact
 
     def is_valid(self):
         try:

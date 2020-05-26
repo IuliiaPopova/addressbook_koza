@@ -22,6 +22,19 @@ def app():
     app_fixture.session.ensure_login(username="admin", password="secret")
     return app_fixture
 
+@pytest.fixture(scope="session", autouse=True)
+def stop(request):
+    """
+    Close session.
+    :param request: request
+    """
+
+    def fin():
+        app_fixture.session.ensure_logout()
+        app_fixture.tear_down()
+
+    # Run after last test
+    request.addfinalizer(fin)
 
 @pytest.fixture
 def check_group():
